@@ -2,11 +2,11 @@
 
 namespace App\Http\Filters\V1;
 
-class TicketFilter extends QueryFilter
+class UserFilter extends QueryFilter
 {
     protected $sortableColumns = [
-        "title",
-        "status",
+        "name",
+        "email",
         "createdAt" => "created_at",
         "updatedAt" => "updated_at",
     ];
@@ -16,15 +16,21 @@ class TicketFilter extends QueryFilter
         return $this->builder->with($value);
     }
 
-    public function status(string $values)
+    public function id(string $values)
     {
-        return $this->builder->whereIn("status", explode(",", $values));
+        return $this->builder->whereIn("id", explode(",", $values));
     }
 
-    public function title(string $value)
+    public function email(string $value)
     {
         $likeStr = str_replace("*", "%", $value);
-        return $this->builder->where("title", "like", $likeStr);
+        return $this->builder->where("email", "like", $likeStr);
+    }
+
+    public function name(string $value)
+    {
+        $likeStr = str_replace("*", "%", $value);
+        return $this->builder->where("name", "like", $likeStr);
     }
 
     public function createdAt(string $values)
