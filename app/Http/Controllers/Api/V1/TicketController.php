@@ -90,7 +90,7 @@ class TicketController extends ApiController
         try {
             $ticket = Ticket::findOrFail($ticket_id);
 
-            $this->isAble("update", $ticket);
+            $this->isAble("replace", $ticket);
 
             $ticket->update($request->mappedAttributes());
 
