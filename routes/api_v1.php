@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\V1\TicketController;
 use App\Http\Controllers\Api\V1\AuthorController;
 use App\Http\Controllers\Api\V1\AuthorTicketsController;
+use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Controllers\AuthController;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
@@ -19,7 +20,11 @@ Route::middleware("auth:sanctum")->group(function () {
         "tickets.update"
     );
 
-    Route::apiResource("authors", AuthorController::class);
+    Route::apiResource("authors", AuthorController::class)->except([
+        "store",
+        "update",
+        "delete",
+    ]);
 
     Route::apiResource(
         "authors.tickets",
@@ -35,6 +40,10 @@ Route::middleware("auth:sanctum")->group(function () {
         AuthorTicketsController::class,
         "update",
     ])->name("authors.tickets.update");
+
+    Route::apiResource("users", UserController::class)->except(["update"]);
+    Route::put("users/{user}", [UserController::class, "replace"]);
+    Route::patch("users/{user}", [UserController::class, "update"]);
 
     Route::get("/user", function (Request $request) {
         return $request->user();

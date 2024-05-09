@@ -21,7 +21,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = ["name", "email", "password"];
+    protected $fillable = ["name", "email", "password", "is_manager"];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -38,6 +38,7 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
+            "is_manager" => "boolean",
             "email_verified_at" => "datetime",
             "password" => "hashed",
         ];
