@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Api\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Hash;
 
 class BaseUserRequest extends FormRequest
 {
@@ -11,10 +10,10 @@ class BaseUserRequest extends FormRequest
     {
         $attributeMap = array_merge(
             [
-                "data.attributes.name" => "name",
-                "data.attributes.email" => "email",
-                "data.attributes.password" => "password",
-                "data.attributes.isManager" => "is_manager",
+                'data.attributes.name' => 'name',
+                'data.attributes.email' => 'email',
+                'data.attributes.password' => 'password',
+                'data.attributes.isManager' => 'is_manager',
             ],
             $additionalAttributes
         );
@@ -25,7 +24,7 @@ class BaseUserRequest extends FormRequest
             if ($this->has($key)) {
                 $value = $this->input($key);
 
-                if ($attribute == "password") {
+                if ($attribute == 'password') {
                     $value = bcrypt($value);
                 }
 
@@ -39,8 +38,7 @@ class BaseUserRequest extends FormRequest
     public function messages()
     {
         return [
-            "data.attributes.status" =>
-                "The data.attributes.status valus is invalid.Please use A,C,H or X.",
+            'data.attributes.status' => 'The data.attributes.status valus is invalid.Please use A,C,H or X.',
         ];
     }
 }

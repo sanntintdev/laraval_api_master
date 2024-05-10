@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Ticket;
 use App\Models\User;
-use Database\Factories\TicketFactory;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -20,12 +19,12 @@ class DatabaseSeeder extends Seeder
         Ticket::factory(100)->recycle($user)->create();
 
         User::factory()->create([
-            "name" => "The Manager",
-            "email" => "manager@gmail.com",
-            "password" => bcrypt("password"),
-            "is_manager" => true,
-            "created_at" => now(),
-            "updated_at" => now(),
+            'name' => 'The Manager',
+            'email' => 'manager@gmail.com',
+            'password' => bcrypt('password'),
+            'is_manager' => true,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
     }
 }

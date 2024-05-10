@@ -10,13 +10,13 @@ class BaseTicketRequest extends FormRequest
     {
         $attributeMap = array_merge(
             [
-                "data.attributes.title" => "title",
-                "data.attributes.description" => "description",
-                "data.attributes.status" => "status",
-                "data.attributes.createdAt" => "created_at",
-                "data.attributes.updatedAt" => "updated_at",
+                'data.attributes.title' => 'title',
+                'data.attributes.description' => 'description',
+                'data.attributes.status' => 'status',
+                'data.attributes.createdAt' => 'created_at',
+                'data.attributes.updatedAt' => 'updated_at',
 
-                "data.relationships.author.data.id" => "user_id",
+                'data.relationships.author.data.id' => 'user_id',
             ],
             $additionalAttributes
         );
@@ -35,8 +35,7 @@ class BaseTicketRequest extends FormRequest
     public function messages()
     {
         return [
-            "data.attributes.status" =>
-                "The data.attributes.status valus is invalid.Please use A,C,H or X.",
+            'data.attributes.status' => 'The data.attributes.status valus is invalid.Please use A,C,H or X.',
         ];
     }
 }

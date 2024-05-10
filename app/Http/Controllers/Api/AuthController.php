@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\LoginUserRequest;
-use App\Http\Requests\ApiLoginRequest;
 use App\Models\User;
 use App\Permissions\V1\Abilities;
 use App\Traits\ApiResponses;
@@ -19,30 +18,30 @@ class AuthController extends Controller
     {
         $request->validated($request->all());
 
-        if (!Auth::attempt($request->only(["email", "password"]))) {
-            return $this->error("Invalid credentials", 401);
+        if (! Auth::attempt($request->only(['email', 'password']))) {
+            return $this->error('Invalid credentials', 401);
         }
 
-        $user = User::FirstWhere("email", $request->email);
+        $user = User::FirstWhere('email', $request->email);
 
         $token = $user->createToken(
-            "API TOKEN for " . $user->name,
+            'API TOKEN for '.$user->name,
             Abilities::getAbilities($user),
             now()->addMonth()
         )->plainTextToken;
 
-        return $this->ok("Authenticated.", ["token" => $token], 200);
+        return $this->ok('Authenticated.', ['token' => $token], 200);
     }
 
     public function register()
     {
-        return $this->ok("Hello API", 200);
+        return $this->ok('Hello API', 200);
     }
 
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
 
-        return $this->ok("Logged out");
+        return $this->ok('Logged out');
     }
 }

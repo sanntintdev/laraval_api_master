@@ -8,6 +8,7 @@ use Illuminate\Http\Request as HttpRequest;
 class QueryFilter
 {
     protected $builder;
+
     protected $sortableColumns;
 
     public function __construct(public HttpRequest $request)
@@ -27,19 +28,19 @@ class QueryFilter
 
     protected function sort($values)
     {
-        $sortAttributes = explode(",", $values);
+        $sortAttributes = explode(',', $values);
 
         foreach ($sortAttributes as $sortAttribute) {
-            $defaultSortOrder = "asc";
+            $defaultSortOrder = 'asc';
 
-            if (strpos($sortAttribute, "-") === 0) {
-                $defaultSortOrder = "desc";
+            if (strpos($sortAttribute, '-') === 0) {
+                $defaultSortOrder = 'desc';
                 $sortAttribute = substr($sortAttribute, 1);
             }
 
             if (
-                !in_array($sortAttribute, $this->sortableColumns) &&
-                !array_key_exists($sortAttribute, $this->sortableColumns)
+                ! in_array($sortAttribute, $this->sortableColumns) &&
+                ! array_key_exists($sortAttribute, $this->sortableColumns)
             ) {
                 continue;
             }

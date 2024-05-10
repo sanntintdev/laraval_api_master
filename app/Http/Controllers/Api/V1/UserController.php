@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Controllers\Controller;
 use App\Http\Filters\V1\UserFilter;
 use App\Http\Requests\Api\V1\ReplaceUserRequest;
 use App\Http\Requests\Api\V1\StoreUserRequest;
@@ -16,14 +15,15 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class UserController extends ApiController
 {
     protected $policyClass = UserPolicy::class;
+
     /**
      * Display a listing of the resource.
      */
     public function index(UserFilter $filters)
     {
         return UserResource::collection(
-            User::select("users.*")
-                ->join("tickets", "users.id", "=", "tickets.user_id")
+            User::select('users.*')
+                ->join('tickets', 'users.id', '=', 'tickets.user_id')
                 ->filter($filters)
                 ->distinct()
                 ->paginate()
@@ -36,11 +36,12 @@ class UserController extends ApiController
     public function store(StoreUserRequest $request)
     {
         try {
-            $this->isAble("store", User::class);
+            $this->isAble('store', User::class);
+
             return new UserResource(User::create($request->mappedAttributes()));
         } catch (AuthorizationException $exception) {
             return $this->error(
-                "You are not authorized to creeate that resource",
+                'You are not authorized to creeate that resource',
                 401
             );
         }
@@ -54,13 +55,13 @@ class UserController extends ApiController
         try {
             $user = User::findOrFail($user_id);
 
-            if ($this->include("tickets")) {
-                return new UserResource($user->load("tickets"));
+            if ($this->include('tickets')) {
+                return new UserResource($user->load('tickets'));
             }
 
             return new UserResource($user);
         } catch (ModelNotFoundException $exception) {
-            return $this->error("User cannot be found.", 404);
+            return $this->error('User cannot be found.', 404);
         }
     }
 
@@ -72,15 +73,15 @@ class UserController extends ApiController
         try {
             $user = User::findOrFail($user_id);
 
-            $this->isAble("update", $user);
+            $this->isAble('update', $user);
 
             $user->update($request->mappedAttributes());
 
             return new UserResource($user);
         } catch (ModelNotFoundException $exception) {
-            return $this->error("User cannot be found.", 404);
+            return $this->error('User cannot be found.', 404);
         } catch (AuthorizationException $exception) {
-            return $this->error("You are not authorized.", 401);
+            return $this->error('You are not authorized.', 401);
         }
     }
 
@@ -92,15 +93,15 @@ class UserController extends ApiController
         try {
             $user = User::findOrFail($user_id);
 
-            $this->isAble("replace", $user);
+            $this->isAble('replace', $user);
 
             $user->update($request->mappedAttributes());
 
             return new UserResource($user);
         } catch (ModelNotFoundException $exception) {
-            return $this->error("User cannot be found.", 404);
+            return $this->error('User cannot be found.', 404);
         } catch (AuthorizationException $exception) {
-            return $this->error("You are not authorized.", 401);
+            return $this->error('You are not authorized.', 401);
         }
     }
 
@@ -113,13 +114,13 @@ class UserController extends ApiController
             $user = User::findOrFail($user_id);
 
             // policy
-            $this->isAble("delete", $user);
+            $this->isAble('delete', $user);
 
             $user->delete();
 
-            return $this->ok("User successfully deleted");
+            return $this->ok('User successfully deleted');
         } catch (ModelNotFoundException $exception) {
-            return $this->error("User cannot found.", 404);
+            return $this->error('User cannot found.', 404);
         }
     }
 }

@@ -12,11 +12,11 @@ class Ticket extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["title", "description", "status", "user_id"];
+    protected $fillable = ['title', 'description', 'status', 'user_id'];
 
     public function author(): BelongsTo
     {
-        return $this->belongsTo(User::class, "user_id");
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function scopeFilter(Builder $builder, QueryFilter $filters)

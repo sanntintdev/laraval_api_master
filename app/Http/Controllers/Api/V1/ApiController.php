@@ -15,13 +15,13 @@ class ApiController extends Controller
 
     public function include(string $relationship): bool
     {
-        $param = request()->get("include");
+        $param = request()->get('include');
 
-        if (!isset($param)) {
+        if (! isset($param)) {
             return false;
         }
 
-        $includeValues = explode(",", strtolower($param));
+        $includeValues = explode(',', strtolower($param));
 
         return in_array(strtolower($relationship), $includeValues);
     }
@@ -40,7 +40,7 @@ class ApiController extends Controller
             $gate->authorize($ability, [$targetModel, $this->policyClass]);
 
             return true;
-        } catch(AuthorizationException $exception) {
+        } catch (AuthorizationException $exception) {
             return false;
         }
 
